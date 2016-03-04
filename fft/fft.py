@@ -1,7 +1,9 @@
-"""
-__init__.py
+#!/usr/bin/python
 
-Python modules import 
+"""
+fft.py
+
+fast fourier transformations
 """
 
 __author__ = "Sunil"
@@ -10,5 +12,8 @@ __license__ = "GNU License"
 __version__ = "0.1.0"
 __email__ = "suba5417@colorado.edu"
 
-from dft import dft
-from dft import idft
+def fft():
+    """
+    Fast fourier transformations
+    """
+    pass
