@@ -29,7 +29,7 @@ class TestDFT(unittest.TestCase):
 
     def test_dft(self):
         x = np.random.random(1024)
-        assert(np.allclose(dft.dft(x), np.fft.fft(x), True))
+        assert(np.allclose(fft.dft(x), np.fft.fft(x), True))
 
 def main(*argv):
     unittest.main()
