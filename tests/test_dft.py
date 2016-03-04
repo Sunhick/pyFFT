@@ -27,9 +27,13 @@ class TestDFT(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_dft(self):
+    def test_simple_dft(self):
         x = np.random.random(1024)
         assert(np.allclose(fft.dft(x), np.fft.fft(x), True))
+
+    #def test_long_dft(self):
+    #    x = np.random.random(10240)
+    #    assert(np.allclose(fft.dft(x), np.fft.fft(x), True))
 
 def main(*argv):
     unittest.main()
