@@ -16,5 +16,4 @@ def fft():
     """
     Fast fourier transformations
     """
-    
     pass
