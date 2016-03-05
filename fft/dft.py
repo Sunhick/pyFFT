@@ -16,12 +16,12 @@ import numpy as np
 
 pi = np.pi
 
-def dft(x):
+def dft(signal):
     """
     Discrete fourier transformations
     """
-    x = np.asarray(x, dtype=float)
-    N = x.shape[0]
+    signal = np.asarray(signal, dtype=float)
+    N = signal.shape[0]
 
     # Make sure we have enough points
     if N < 1:
@@ -30,7 +30,7 @@ def dft(x):
     n = np.arange(N)
     k = n.reshape((N, 1))
     M = np.exp(-2j * pi * k * n / N)
-    return np.dot(M, x)
+    return np.dot(M, signal)
 
 def idft():
     """
