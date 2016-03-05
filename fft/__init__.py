@@ -12,3 +12,5 @@ __email__ = "suba5417@colorado.edu"
 
 from dft import dft
 from dft import idft
+
+from fft import fft
