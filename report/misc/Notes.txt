@@ -1,0 +1,8 @@
+(dft_5000.pkl) is the pickle file containing the #data points, DFT data. It could be used for regenerating the DFT.png file
+
+* Data points: 1-5000
+* Increment size: 1
+
+* DFT-1.png : was generated with 5000 data points. Which roughly follows a O(N^2)
+* DFT-2.png : was generated wtih 5000 data points. with change in axis
+-------------------------------------------------------------------------------------------------------------------------
