@@ -21,40 +21,46 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot(data):
-    x = data.keys()
-    y = data.values()
+def plot(dft, fft, filename):
+    x = dft.keys()
+    y = dft.values()
+
+    y1 = fft.values()
     
     plt.figure()
     m = plt.scatter(x, y, color='b', alpha=.5)
+    n = plt.scatter(x, y1, color='r', alpha=.5)
     plt.xlim(0, max(x))
-    plt.ylim(0, max(y))
+    plt.ylim(0, max(y+y1))
 
     plt.xlabel('N')
     plt.ylabel('time')
     plt.title("runtime of FFT")
     
-    plt.savefig('runtime.png')
+    plt.savefig(filename)
     plt.show()
 
-def serialize(data):
+def serialize(data, fn):
     import pickle
-    out = open('data.pkl', 'wb')
+    out = open(fn, 'wb')
     pickle.dump(data, out)
     out.close()
 
-def main(start, end, step):
-    data = {}
+def main(start, end, step, filename):
+    dft = {}
+    fft = {}
     for n in range(start, end+1, step):
-        print 'Running for ', n, n
-        #n = math.pow(2, n)
+        print 'Running for ', n, math.pow(2, n)
+        n = math.pow(2, n)
         x = np.random.random(n)
-        # timer = timeit.Timer(lambda: fft.fft(x))
-        timer = timeit.Timer(lambda: dft.dft(x))
-        data[n] = timer.timeit(number=1)
+        fft_timer = timeit.Timer(lambda: fft.fft(x))
+        dft_timer = timeit.Timer(lambda: dft.dft(x))
+        dft[n] = dft_timer.timeit(number=1)
+        fft[n] = fft_timer.timeit(number=1)
 
-    serialize(data)
-    plot(data)
+    serialize(dft, 'dft.pkl')
+    serialize(fft, 'fft.pkl')
+    plot(dft, fft, filename)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='FFT/DFT runtime')
@@ -71,4 +77,4 @@ if __name__ == '__main__':
                         help="file name to save the plot",
                         required=False)
     args = parser.parse_args()
-    main(args.start, args.end, args.step)
+    main(args.start, args.end, args.step, args.save)
