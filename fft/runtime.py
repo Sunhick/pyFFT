@@ -35,7 +35,8 @@ def plot(dft, fft, filename):
 
     plt.xlabel('N')
     plt.ylabel('time')
-    plt.title("runtime of FFT")
+    plt.title("runtime of FFT & DFT")
+    plt.legend((m, n),('dft', 'fft'), loc='lower right')
     
     plt.savefig(filename)
     plt.show()
