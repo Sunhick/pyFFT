@@ -17,6 +17,7 @@ import fft
 import dft
 import math
 import timeit
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -42,11 +43,9 @@ def serialize(data):
     pickle.dump(data, out)
     out.close()
 
-def main(*argv):
+def main(start, end, step):
     data = {}
-    N = [i for i in np.arange(1, 5000, 5)]
-
-    for n in N:
+    for n in range(start, end+1, step):
         print 'Running for ', n, n
         #n = math.pow(2, n)
         x = np.random.random(n)
@@ -58,4 +57,18 @@ def main(*argv):
     plot(data)
 
 if __name__ == '__main__':
-    main(sys.argv)
+    parser = argparse.ArgumentParser(description='FFT/DFT runtime')
+    parser.add_argument("-start", type=int,
+                        help="starting range",
+                        required=True)
+    parser.add_argument("-end", type=int,
+                        help="ending range",
+                        required=True)
+    parser.add_argument("-step", type=int, default=1,
+                        help="step size for FFT/DFT",
+                        required=False)
+    parser.add_argument("-save", type=str, default="runtime.png",
+                        help="file name to save the plot",
+                        required=False)
+    args = parser.parse_args()
+    main(args.start, args.end, args.step)
