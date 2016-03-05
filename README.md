@@ -1,6 +1,6 @@
 # FFT
 
-[![Build Status](https://api.travis-ci.org/Sunhick/FFT.svg?branch=master)](https://travis-ci.org/Sunhick/FFT)
+[![Build Status](https://api.travis-ci.org/Sunhick/pyFFT.svg?branch=master)](https://travis-ci.org/Sunhick/pyFFT)
 
 Fast fourier transformations
 
