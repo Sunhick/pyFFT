@@ -43,6 +43,15 @@ class TestDFT(unittest.TestCase):
         x = np.random.random(103)
         self.assertTrue(np.allclose(fft.dft(x), np.fft.fft(x)))
 
+    def test_all_zero_dft(self):
+        x = np.zeros(512)
+        self.assertTrue(np.allclose(fft.dft(x), np.fft.fft(x)))
+
+    def test_all_ones_dft(self):
+        x = np.ones(1024)
+        self.assertTrue(np.allclose(fft.dft(x), np.fft.fft(x)))
+
+
 def main(*argv):
     unittest.main()
 

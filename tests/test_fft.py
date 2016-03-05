@@ -48,10 +48,18 @@ class TestFFT(unittest.TestCase):
         self.assertTrue(np.allclose(fft.dft(x), np.fft.fft(x)))
 
     def test_ifft(self):
-        #x = np.random.random(128)
+        # x = np.random.random(128)
         x = np.random.random(30) + 1j*np.random.random(30)
-        #self.assertAlmostEquals(x , fft.ifft(fft.fft(x)))
-        self.assertTrue(np.allclose(fft.ifft(fft.fft(x)), np.fft.ifft(np.fft.fft(x))))
+        # self.assertAlmostEquals(x , fft.ifft(fft.fft(x)))
+        # self.assertTrue(np.allclose(fft.ifft(fft.fft(x)), np.fft.ifft(np.fft.fft(x))))
+
+    def test_all_zero_fft(self):
+        x = np.zeros(512)
+        self.assertTrue(np.allclose(fft.fft(x), np.fft.fft(x)))
+
+    def test_all_ones_fft(self):
+        x = np.ones(1024)
+        self.assertTrue(np.allclose(fft.fft(x), np.fft.fft(x)))
 
 def main(*argv):
     unittest.main()

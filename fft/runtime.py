@@ -14,6 +14,7 @@ __email__ = "suba5417@colorado.edu"
 
 import sys
 import fft
+import dft
 import math
 import timeit
 import numpy as np
@@ -37,14 +38,14 @@ def plot(data):
 
 def main(*argv):
     data = {}
-    N = [i for i in np.arange(1, 25, 1)]
+    N = [i for i in np.arange(1, 5000, 5)]
 
     for n in N:
-        print 'Running for ', n, 2**n
-        n = math.pow(2, n)
+        print 'Running for ', n, n
+        #n = math.pow(2, n)
         x = np.random.random(n)
         # timer = timeit.Timer(lambda: fft.fft(x))
-        timer = timeit.Timer(lambda: fft.FFT_vectorized(x))
+        timer = timeit.Timer(lambda: dft.dft(x))
         data[n] = timer.timeit(number=1)
 
     plot(data)
