@@ -6,3 +6,9 @@
 * DFT-1.png : was generated with 5000 data points. Which roughly follows a O(N^2)
 * DFT-2.png : was generated wtih 5000 data points. with change in axis
 -------------------------------------------------------------------------------------------------------------------------
+(fft_vect_27.pkl) is the pickle file containing the #points(power of 2), FFT data.
+
+* Data points: 1-2^27
+* Increment size: 1
+
+* fft_vect.png: follow O(NlogN)
