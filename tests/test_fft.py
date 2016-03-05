@@ -29,7 +29,7 @@ class TestFFT(unittest.TestCase):
 
     def test_simple_fft(self):
         x = np.random.random(1024)
-        assert(np.allclose(fft.fft(x), np.fft.fft(x), True))
+        self.assertTrue(np.allclose(fft.fft(x), np.fft.fft(x)))
 
     def test_small_odd_fft(self):
         x = np.random.random(103)
@@ -39,9 +39,13 @@ class TestFFT(unittest.TestCase):
         x = np.random.random(103090987)
         self.assertRaises(ValueError, fft.fft, x)
 
+    def test_invalid_points_fft(self):
+        x = []
+        self.assertRaises(ValueError, fft.fft, x)
+
     def test_long_fft(self):
         x = np.random.random(1020)
-        assert(np.allclose(fft.dft(x), np.fft.fft(x), True))
+        self.assertTrue(np.allclose(fft.dft(x), np.fft.fft(x)))
 
 def main(*argv):
     unittest.main()

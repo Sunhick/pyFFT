@@ -22,7 +22,14 @@ def fft(x):
     x = np.asarray(x, dtype=float)
     N = x.shape[0]
 
+    # Make sure we have enough points
+    if N < 1:
+        raise ValueError("Invalid number of FFT data points (%d) specified." % N)
+
+    # fft works only with even length
     if N % 2 > 0:
+        # When it's even fallback to DFT
+        # retun dft.dft(x)
         raise ValueError("size of input must be a power of 2")
     elif N <= 32: # threshold for fft
         return dft.dft(x)

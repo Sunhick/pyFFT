@@ -29,11 +29,19 @@ class TestDFT(unittest.TestCase):
 
     def test_simple_dft(self):
         x = np.random.random(1024)
-        assert(np.allclose(fft.dft(x), np.fft.fft(x), True))
+        self.assertTrue(np.allclose(fft.dft(x), np.fft.fft(x)))
 
-    #def test_long_dft(self):
-    #    x = np.random.random(10240)
-    #    assert(np.allclose(fft.dft(x), np.fft.fft(x), True))
+    def test_invalid_points_dft(self):
+        x = []
+        self.assertRaises(ValueError, fft.dft, x)
+
+    def test_long_dft(self):
+        x = np.random.random(1020)
+        self.assertTrue(np.allclose(fft.dft(x), np.fft.fft(x)))
+
+    def test_smal_odd_dft(self):
+        x = np.random.random(103)
+        self.assertTrue(np.allclose(fft.dft(x), np.fft.fft(x)))
 
 def main(*argv):
     unittest.main()

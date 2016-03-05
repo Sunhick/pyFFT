@@ -22,6 +22,11 @@ def dft(x):
     """
     x = np.asarray(x, dtype=float)
     N = x.shape[0]
+
+    # Make sure we have enough points
+    if N < 1:
+        raise ValueError("Invalid number of FFT data points (%d) specified." % N)
+
     n = np.arange(N)
     k = n.reshape((N, 1))
     M = np.exp(-2j * pi * k * n / N)
