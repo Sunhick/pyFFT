@@ -36,6 +36,12 @@ def plot(data):
     plt.savefig('runtime.png')
     plt.show()
 
+def serialize(data):
+    import pickle
+    out = open('data.pkl', 'wb')
+    pickle.dump(data, out)
+    out.close()
+
 def main(*argv):
     data = {}
     N = [i for i in np.arange(1, 5000, 5)]
@@ -48,6 +54,7 @@ def main(*argv):
         timer = timeit.Timer(lambda: dft.dft(x))
         data[n] = timer.timeit(number=1)
 
+    serialize(data)
     plot(data)
 
 if __name__ == '__main__':
