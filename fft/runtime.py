@@ -21,6 +21,8 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
+from scipy.interpolate import InterpolatedUnivariateSpline
+
 def plot(dft, fft, filename):
     x = dft.keys()
     y = dft.values()
@@ -30,8 +32,8 @@ def plot(dft, fft, filename):
     plt.figure()
     m = plt.scatter(x, y, color='b', alpha=.5)
     n = plt.scatter(x, y1, color='r', alpha=.5)
-    plt.xlim(0, max(x))
-    plt.ylim(0, max(y+y1))
+    # plt.xlim(0, max(x))
+    # plt.ylim(0, max(y+y1))
 
     plt.xlabel('N')
     plt.ylabel('time')
@@ -61,7 +63,28 @@ def main(start, end, step, filename):
 
     serialize(rt_dft, 'dft.pkl')
     serialize(rt_fft, 'fft.pkl')
+    print 'len: ', len(rt_fft)
+    # extrapolation the data for fft and dft before plot
+    # so we have more points to plot
+    rt_dft, rt_fft = Extrapolation(rt_dft, rt_fft, end, end+20, step)
+    print 'done extrapolating.... len:', len(rt_fft)
     plot(rt_dft, rt_fft, filename)
+
+def Extrapolation(rdft, rfft, start, end, step):
+    exp_x = np.array([math.pow(2, i) for i in range(start, end+1, step)])
+    # spline order: 1 linear, 2 quadratic, 3 cubic ... 
+    # do inter/extrapolation
+    dft_exp = InterpolatedUnivariateSpline(rdft.keys(), rdft.values(), k=2)
+    fft_exp = InterpolatedUnivariateSpline(rfft.keys(), rfft.values(), k=1.5)
+
+    dft_y = dft_exp(exp_x)
+    fft_y = fft_exp(exp_x)
+
+    for key, dft_val, fft_val in zip(exp_x, dft_y, fft_y):
+        rdft[key] = dft_val
+        rfft[key] = fft_val
+
+    return rdft, rfft
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='FFT/DFT runtime')
