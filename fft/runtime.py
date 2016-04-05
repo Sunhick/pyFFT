@@ -48,20 +48,20 @@ def serialize(data, fn):
     out.close()
 
 def main(start, end, step, filename):
-    dft = {}
-    fft = {}
+    rt_dft = {}
+    rt_fft = {}
     for n in range(start, end+1, step):
         print 'Running for ', n, math.pow(2, n)
         n = math.pow(2, n)
         x = np.random.random(n)
         fft_timer = timeit.Timer(lambda: fft.fft(x))
         dft_timer = timeit.Timer(lambda: dft.dft(x))
-        dft[n] = dft_timer.timeit(number=1)
-        fft[n] = fft_timer.timeit(number=1)
+        rt_dft[n] = dft_timer.timeit(number=1)
+        rt_fft[n] = fft_timer.timeit(number=1)
 
-    serialize(dft, 'dft.pkl')
-    serialize(fft, 'fft.pkl')
-    plot(dft, fft, filename)
+    serialize(rt_dft, 'dft.pkl')
+    serialize(rt_fft, 'fft.pkl')
+    plot(rt_dft, rt_fft, filename)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='FFT/DFT runtime')
