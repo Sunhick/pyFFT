@@ -23,6 +23,22 @@ import matplotlib.pyplot as plt
 
 from scipy.interpolate import InterpolatedUnivariateSpline
 
+def logplot(fft, filename):
+    x = fft.keys()
+    y = fft.values()
+
+    y = [math.log(i, 2) for i in y]
+
+    plt.figure()
+    m = plt.scatter(x, y, color='b', alpha=.5)
+
+    plt.xlabel('N')
+    plt.ylabel('time')
+    plt.title("runtime of FFT in logscale")
+    
+    plt.savefig(filename)
+    plt.show()
+
 def plot(dft, fft, filename):
     x = dft.keys()
     y = dft.values()
@@ -69,6 +85,7 @@ def main(start, end, step, filename):
     rt_dft, rt_fft = Extrapolation(rt_dft, rt_fft, end, end+20, step)
     print 'done extrapolating.... len:', len(rt_fft)
     plot(rt_dft, rt_fft, filename)
+    # logplot(rt_fft, 'fft_logscale.png')
 
 def Extrapolation(rdft, rfft, start, end, step):
     exp_x = np.array([math.pow(2, i) for i in range(start, end+1, step)])
