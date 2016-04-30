@@ -46,8 +46,8 @@ def plot(x, dft, fft, filename):
     y = np.array(dft)
     y1 = np.array(fft)
 
-    edft = interp1d(x, y, kind='quadratic')
-    efft = interp1d(x, y1, kind='slinear')
+    #edft = interp1d(x, y, kind='quadratic')
+    #efft = interp1d(x, y1, kind='slinear')
     
     plt.figure()
 
@@ -59,14 +59,31 @@ def plot(x, dft, fft, filename):
     # plt.ylim(0, max(y+y1))
 
     xnew = np.linspace(x[0], x[-1], num=len(x)*2, endpoint=True)
-    plt.plot(x, y, 'o', x, y1, 'o', xnew, edft(xnew), '-', xnew, efft(xnew), '-')
+
+    # DFT
+    c1 = .00000009
+    c2 = .00000004
+    gn = x**2
+    #plt.plot(x,y, '-', x, c1*gn, '-', x, c2*gn, '-')
+    plt.semilogx(x,y, '.', x, c1*gn, '.', x, c2*gn, '.')
+
+    # FFT
+    #c1 = .0000003
+    #c2 = .00000019
+    #gn = np.array([i*np.log(i) for i in x])
+    #plt.plot(x,y1, '-', x, c1*gn, '-', x, c2*gn, '-')
+    #plt.semilogx(x,y1, '-', x, c1*gn, '-', x, c2*gn, '-')
+
+    #plt.plot(x, y, 'o', x, y1, 'o', xnew, edft(xnew), '-', xnew, efft(xnew), '-')
 
     plt.xlabel('N')
     plt.ylabel('time')
-    plt.title("runtime of FFT & DFT")
+    plt.title("runtime of FFT")
+    #plt.title("runtime of DFT")
     plt.xlim(xmin=1)
     plt.xlim(xmin=1)
-    plt.legend(['dft', 'fft'], loc='best')
+    plt.legend(['dft', 'c1*n^2', 'c2*n^2'], loc='best')
+    #plt.legend(['fft', 'c1*nlog(n)', 'c2*nlog(n)'], loc='best')
     
     plt.savefig(filename)
     plt.show()
@@ -82,20 +99,20 @@ def main(start, end, step, filename):
     rt_fft = []
     rt_ran = []
     for n in range(start, end+1, step):
-        print 'Running for ', n, math.pow(2, n)
-        n = math.pow(2, n)
+        print 'Running for ', n#, math.pow(2, n)
+        #n = math.pow(2, n)
         x = np.random.random(n)
-        fft_timer = timeit.Timer(lambda: fft.fft(x))
+        #fft_timer = timeit.Timer(lambda: fft.fft(x))
         dft_timer = timeit.Timer(lambda: dft.dft(x))
 
         rt_ran.append(n)
         rt_dft.append(dft_timer.timeit(number=1))
-        rt_fft.append(fft_timer.timeit(number=1))
+        #rt_fft.append(fft_timer.timeit(number=1))
 
     # serialize(rt_dft, 'dft.pkl')
     # serialize(rt_fft, 'fft.pkl')
     # serialize(rt_ran, 'xrange.pkl')
-    print 'len: ', len(rt_fft)
+    #print 'len: ', len(rt_fft)
     # extrapolation the data for fft and dft before plot
     # so we have more points to plot
     #rt_ran, rt_dft, rt_fft = Extrapolation(rt_ran, rt_dft, rt_fft, end, end+20, step)
